@@ -1,3 +1,7 @@
+# Load local .env file for development only (ignored in production)
+from dotenv import load_dotenv
+load_dotenv()
+
 import requests
 import yfinance as yf
 import smtplib

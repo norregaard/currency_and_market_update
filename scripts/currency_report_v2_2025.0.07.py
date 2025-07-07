@@ -28,7 +28,11 @@ def get_exchange_rates():
         raise Exception("Failed to get required exchange rates.")
 
 def get_xau_xag_to_dkk():
-    api_key = "1ce53d09f679bf18cbb43af2ac7a0d92"
+    api_key = os.getenv("METAL_API_KEY")
+    if not api_key:
+        print("❌ Missing METAL_API_KEY in environment.")
+        return None, None
+
     url = "https://api.metalpriceapi.com/v1/latest"
     params = {
         "api_key": api_key,
