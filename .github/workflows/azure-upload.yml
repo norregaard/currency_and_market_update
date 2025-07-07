@@ -2,7 +2,7 @@ name: Daily Azure Blob Upload
 
 on:
   schedule:
-    - cron: '0 8 * * *'  # 8:00 AM UTC = 10:00 AM CEST (July 2025, DST)
+    - cron: '0 8 10 * *'  # 8:00 AM UTC = 10:00 AM CEST (July 2025, DST)
   workflow_dispatch:  # Allows manual triggering
 
 permissions:
