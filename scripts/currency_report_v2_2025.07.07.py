@@ -65,16 +65,14 @@ def get_accenture_stock_price(usd_to_dkk):
 # ---------------------- OUTPUT & EMAIL FUNCTIONS ----------------------
 
 def build_report_table(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, acn_dkk):
-    lines = [
-        "Asset            | Value",
-        "-----------------|---------------------",
-        f"1 USD            | {usd_to_dkk:.4f} DKK",
-        f"1 GBP            | {gbp_to_dkk:.4f} DKK",
-        f"1 XAU (Gold)     | {xau_dkk:.2f} DKK" if xau_dkk else "1 XAU (Gold)     | N/A",
-        f"1 XAG (Silver)   | {xag_dkk:.2f} DKK" if xag_dkk else "1 XAG (Silver)   | N/A",
-        f"Accenture (ACN)  | {acn_usd:.2f} USD / {acn_dkk:.2f} DKK" if acn_usd and acn_dkk else "Accenture (ACN)  | N/A",
+    table = [
+        ["1 USD", f"{usd_to_dkk:.4f} DKK"],
+        ["1 GBP", f"{gbp_to_dkk:.4f} DKK"],
+        ["1 XAU (Gold)", f"{xau_dkk:.2f} DKK" if xau_dkk else "N/A"],
+        ["1 XAG (Silver)", f"{xag_dkk:.2f} DKK" if xag_dkk else "N/A"],
+        ["Accenture (ACN)", f"{acn_usd:.2f} USD / {acn_dkk:.2f} DKK" if acn_usd and acn_dkk else "N/A"],
     ]
-    return "\n".join(lines)
+    return tabulate(table, headers=["Asset", "Value"], tablefmt="fancy_grid")
 
 def send_email(subject, body, to_email, from_email, password):
     msg = MIMEText(body)
