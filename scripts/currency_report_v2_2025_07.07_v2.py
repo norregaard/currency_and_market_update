@@ -1,8 +1,8 @@
 import requests
 import yfinance as yf
+from tabulate import tabulate
 import smtplib
 from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
 import os
 
 # ---------------------- DATA FETCHING FUNCTIONS ----------------------
@@ -59,48 +59,28 @@ def get_accenture_stock_price(usd_to_dkk):
         price_usd = ticker.info["regularMarketPrice"]
         price_dkk = price_usd * usd_to_dkk
         return price_usd, price_dkk
-    except Exception:
+    except Exception as e:
         return None, None
 
-# ---------------------- HTML EMAIL TABLE ----------------------
+# ---------------------- OUTPUT & EMAIL FUNCTIONS ----------------------
 
-def build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, acn_dkk):
-    rows = f"""
-        <tr><td>1 USD</td><td>{usd_to_dkk:.4f} DKK</td></tr>
-        <tr><td>1 GBP</td><td>{gbp_to_dkk:.4f} DKK</td></tr>
-        <tr><td>1 XAU (Gold)</td><td>{f"{xau_dkk:.2f} DKK" if xau_dkk else "N/A"}</td></tr>
-        <tr><td>1 XAG (Silver)</td><td>{f"{xag_dkk:.2f} DKK" if xag_dkk else "N/A"}</td></tr>
-        <tr><td>Accenture (ACN)</td><td>{f"{acn_usd:.2f} USD / {acn_dkk:.2f} DKK" if acn_usd and acn_dkk else "N/A"}</td></tr>
-    """
+def build_report_table(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, acn_dkk):
+    lines = [
+        "Asset            | Value",
+        "-----------------|---------------------",
+        f"1 USD            | {usd_to_dkk:.4f} DKK",
+        f"1 GBP            | {gbp_to_dkk:.4f} DKK",
+        f"1 XAU (Gold)     | {xau_dkk:.2f} DKK" if xau_dkk else "1 XAU (Gold)     | N/A",
+        f"1 XAG (Silver)   | {xag_dkk:.2f} DKK" if xag_dkk else "1 XAG (Silver)   | N/A",
+        f"Accenture (ACN)  | {acn_usd:.2f} USD / {acn_dkk:.2f} DKK" if acn_usd and acn_dkk else "Accenture (ACN)  | N/A",
+    ]
+    return "\n".join(lines)
 
-    html = f"""
-    <html>
-    <body style="font-family: Arial, sans-serif; color: #333;">
-        <h2>💱 Monthly Currency & Market Report</h2>
-        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; min-width: 300px;">
-            <thead style="background-color: #f2f2f2;">
-                <tr><th>Asset</th><th>Value</th></tr>
-            </thead>
-            <tbody>
-                {rows}
-            </tbody>
-        </table>
-        <p style="font-size: 12px; color: #999;">Sent automatically by GitHub Actions.</p>
-    </body>
-    </html>
-    """
-    return html
-
-# ---------------------- EMAIL SENDING ----------------------
-
-def send_email(subject, html_body, to_email, from_email, password):
-    msg = MIMEMultipart("alternative")
+def send_email(subject, body, to_email, from_email, password):
+    msg = MIMEText(body)
     msg["Subject"] = subject
     msg["From"] = from_email
     msg["To"] = to_email
-
-    part_html = MIMEText(html_body, "html")
-    msg.attach(part_html)
 
     try:
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
@@ -119,10 +99,11 @@ if __name__ == "__main__":
     xau_dkk, xag_dkk = get_xau_xag_to_dkk()
     acn_usd, acn_dkk = get_accenture_stock_price(usd_to_dkk)
 
-    html_output = build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, acn_dkk)
-    print("📧 Preview:\n", html_output)  # Optional for debugging
+    report = build_report_table(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, acn_dkk)
+    print("\n📊 Monthly Currency & Market Report\n")
+    print(report)
 
-    # Read email config from environment
+    # Get email credentials from environment (GitHub Secrets or locally)
     to_email = os.getenv("TO_EMAIL")
     from_email = os.getenv("FROM_EMAIL")
     password = os.getenv("EMAIL_PASSWORD")
@@ -130,10 +111,10 @@ if __name__ == "__main__":
     if to_email and from_email and password:
         send_email(
             subject="💱 Monthly Currency & Market Report",
-            html_body=html_output,
+            body=report,
             to_email=to_email,
             from_email=from_email,
             password=password
         )
     else:
-        print("⚠️ Missing email credentials in environment.")
+        print("⚠️ Email not sent — missing environment variables.")
