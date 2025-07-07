@@ -98,7 +98,7 @@ if __name__ == "__main__":
     acn_usd, acn_dkk = get_accenture_stock_price(usd_to_dkk)
 
     report = build_report_table(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, acn_dkk)
-    print("\n📊 Daily Currency & Market Report\n")
+    print("\n📊 Monthly Currency & Market Report\n")
     print(report)
 
     # Get email credentials from environment (GitHub Secrets or locally)
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 
     if to_email and from_email and password:
         send_email(
-            subject="💱 Daily Currency & Market Report",
+            subject="💱 Monthly Currency & Market Report",
             body=report,
             to_email=to_email,
             from_email=from_email,
