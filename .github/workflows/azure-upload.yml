@@ -41,7 +41,7 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Upload to Azure Blob Storage
-        uses: azure/storage-blob-upload@v1
+        uses: azure/CLI@v2
         with:
           account-name: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
           container-name: $web
