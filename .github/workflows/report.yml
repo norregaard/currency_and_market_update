@@ -27,5 +27,6 @@ jobs:
         TO_EMAIL: ${{ secrets.TO_EMAIL }}
         FROM_EMAIL: ${{ secrets.FROM_EMAIL }}
         EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        METAL_API_KEY: ${{ secrets.METAL_API_KEY }}
       run: |
         python scripts/currency_report_v2.py
