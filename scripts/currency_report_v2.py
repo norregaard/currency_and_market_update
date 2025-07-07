@@ -93,6 +93,7 @@ def build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, a
                 {rows}
             </tbody>
         </table>
+        <img src="https://raw.githubusercontent.com/norregaard/currency_and_market_update/main/assets/Logo_jfn_github.png" alt="Logo" style="width:200px; height:auto; display:block; margin-bottom:20px;">
         <p style="font-size: 12px; color: #999;">Sent automatically by GitHub Actions.</p>
     </body>
     </html>
