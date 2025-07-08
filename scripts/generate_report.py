@@ -89,19 +89,59 @@ def build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, a
     <head>
         <title>Monthly Currency & Market Report</title>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {{
+                font-family: Arial, sans-serif;
+                color: #333;
+                margin: 0;
+                padding: 20px;
+            }}
+            .container {{
+                max-width: 600px;
+                margin: auto;
+                padding: 10px;
+            }}
+            table {{
+                width: 100%;
+                border-collapse: collapse;
+            }}
+            th, td {{
+                padding: 12px;
+                text-align: left;
+                border: 1px solid #ddd;
+                font-size: 1rem;
+            }}
+            thead {{
+                background-color: #f2f2f2;
+            }}
+            img {{
+                max-width: 100%;
+                height: auto;
+                display: block;
+                margin: 20px auto;
+            }}
+            p {{
+                font-size: 0.8rem;
+                color: #999;
+                text-align: center;
+            }}
+        </style>
     </head>
-    <body style="font-family: Arial, sans-serif; color: #333;">
-        <h2>💱 Monthly Currency & Market Report</h2>
-        <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; min-width: 300px;">
-            <thead style="background-color: #f2f2f2;">
-                <tr><th>Asset</th><th>Value</th></tr>
-            </thead>
-            <tbody>
-                {rows}
-            </tbody>
-        </table>
-        <img src="{blob_storage_base_url}/Logo_jfn_github.png" alt="Logo" style="width:200px; height:auto; display:block; margin-bottom:20px;">
-        <p style="font-size: 12px; color: #999;">Generated on {timestamp} by GitHub Actions.</p>
+    <body>
+        <div class="container">
+            <h2 style="text-align:center;">💱 Monthly Currency & Market Report</h2>
+            <table>
+                <thead>
+                    <tr><th>Asset</th><th>Value</th></tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
+            </table>
+            <img src="{blob_storage_base_url}/Logo_jfn_github.png" alt="Logo">
+            <p>Generated on {timestamp} CET by GitHub Actions.</p>
+        </div>
     </body>
     </html>
     """
