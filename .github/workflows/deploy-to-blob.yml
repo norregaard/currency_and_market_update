@@ -25,6 +25,8 @@ jobs:
 
       - name: Run HTML generator script
         run: python scripts/generate_report.py  # Replace with your script name
+        env:
+          METAL_API_KEY: ${{ secrets.METAL_API_KEY }}
 
       - name: Azure CLI login
         uses: azure/login@v1
