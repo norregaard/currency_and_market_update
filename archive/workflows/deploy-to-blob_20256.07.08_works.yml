@@ -1,0 +1,43 @@
+name: Generate and Upload HTML to Azure
+
+on:
+  schedule:
+    - cron: '0 8 * * *'  # Runs every day at 08:00 UTC
+  workflow_dispatch:      # Allows manual trigger
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt  # Adjust if you don’t use a requirements file
+
+      - name: Run HTML generator script
+        run: python scripts/generate_report.py  # Replace with your script name
+        env:
+          METAL_API_KEY: ${{ secrets.METAL_API_KEY }}
+
+      - name: Azure CLI login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Upload all files to Azure Blob
+        run: |
+          az storage blob upload-batch \
+            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
+            --destination '$web' \
+            --source dist \
+            --overwrite \
+            --auth-mode login
