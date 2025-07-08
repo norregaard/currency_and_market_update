@@ -87,7 +87,7 @@ def build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, a
     html = f"""
     <html>
     <head>
-        <title>Monthly Currency & Market Report</title>
+        <title>Daily Currency & Market Update</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style>
