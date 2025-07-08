@@ -28,4 +28,4 @@ Automatically fetches daily (or monthly) currency exchange rates, metal prices, 
 | Accenture (ACN) | 304.78 USD / 1932.67 DKK |
 
 
----
+----
