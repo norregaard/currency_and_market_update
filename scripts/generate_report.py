@@ -101,7 +101,7 @@ def build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, a
             </tbody>
         </table>
         <img src="{blob_storage_base_url}/Logo_jfn_github.png" alt="Logo" style="width:200px; height:auto; display:block; margin-bottom:20px;">
-        <p style="font-size: 12px; color: #999;">Generated on {timestamp} by GitHub Actions.</p>  # ← UPDATED
+        <p style="font-size: 12px; color: #999;">Generated on {timestamp} by GitHub Actions.</p>
     </body>
     </html>
     """
