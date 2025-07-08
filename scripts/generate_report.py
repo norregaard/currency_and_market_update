@@ -130,7 +130,7 @@ def build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, a
     </head>
     <body>
         <div class="container">
-            <h2 style="text-align:center;">💱 Monthly Currency & Market Report</h2>
+            <h2 style="text-align:center;">💱 Daily Currency & Market Update</h2>
             <table>
                 <thead>
                     <tr><th>Asset</th><th>Value</th></tr>
