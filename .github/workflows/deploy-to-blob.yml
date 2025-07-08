@@ -35,7 +35,7 @@ jobs:
         run: |
           az storage blob upload-batch \
             --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT }} \
-            --destination ${{ secrets.AZURE_STORAGE_CONTAINER }} \
+            --destination "$web" \
             --source dist \
             --overwrite \
             --auth-mode login
