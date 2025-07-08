@@ -84,7 +84,6 @@ def build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, a
         <meta charset="UTF-8">
     </head>
     <body style="font-family: Arial, sans-serif; color: #333;">
-        <img src="{blob_storage_base_url}/Logo_jfn_github.png" alt="Logo" style="width:200px; height:auto; display:block; margin-bottom:20px;">
         <h2>💱 Monthly Currency & Market Report</h2>
         <table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; min-width: 300px;">
             <thead style="background-color: #f2f2f2;">
@@ -94,6 +93,7 @@ def build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, a
                 {rows}
             </tbody>
         </table>
+        <img src="{blob_storage_base_url}/Logo_jfn_github.png" alt="Logo" style="width:200px; height:auto; display:block; margin-bottom:20px;">
         <p style="font-size: 12px; color: #999;">Generated automatically by GitHub Actions.</p>
     </body>
     </html>
