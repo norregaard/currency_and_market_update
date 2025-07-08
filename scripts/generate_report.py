@@ -2,10 +2,13 @@
 from dotenv import load_dotenv
 load_dotenv()
 
+from datetime import datetime
+
 import requests
 import yfinance as yf
 import os
 import shutil
+import pytz
 
 # ---------------------- DATA FETCHING FUNCTIONS ----------------------
 def get_exchange_rates():
@@ -66,9 +69,13 @@ def get_accenture_stock_price(usd_to_dkk):
         return price_usd, price_dkk
     except Exception:
         return None, None
+    
+# Generate timestamp
+cet = pytz.timezone("Europe/Copenhagen")
+timestamp = datetime.now(cet).strftime("%Y-%m-%d %H:%M CET") # ← YYYY-MM-DD in CET
 
 # ---------------------- HTML REPORT ----------------------
-def build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, acn_dkk, blob_storage_base_url):
+def build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, acn_dkk, blob_storage_base_url, timestamp):
     rows = f"""
         <tr><td>1 USD</td><td>{usd_to_dkk:.4f} DKK</td></tr>
         <tr><td>1 GBP</td><td>{gbp_to_dkk:.4f} DKK</td></tr>
@@ -94,7 +101,7 @@ def build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, a
             </tbody>
         </table>
         <img src="{blob_storage_base_url}/Logo_jfn_github.png" alt="Logo" style="width:200px; height:auto; display:block; margin-bottom:20px;">
-        <p style="font-size: 12px; color: #999;">Generated automatically by GitHub Actions.</p>
+        <p style="font-size: 12px; color: #999;">Generated on {timestamp} by GitHub Actions.</p>  # ← UPDATED
     </body>
     </html>
     """
@@ -128,7 +135,7 @@ if __name__ == "__main__":
     blob_storage_base_url = os.getenv("BLOB_STORAGE_BASE_URL", "https://stcurrencyreportjfn003.z16.web.core.windows.net")
 
     # Generate HTML report
-    html_output = build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, acn_dkk, blob_storage_base_url)
+    html_output = build_report_table_html(usd_to_dkk, gbp_to_dkk, xau_dkk, xag_dkk, acn_usd, acn_dkk, blob_storage_base_url, timestamp)
     print("📧 Preview:\n", html_output)  # Optional for debugging
 
     # Save HTML and logo to dist/ directory
