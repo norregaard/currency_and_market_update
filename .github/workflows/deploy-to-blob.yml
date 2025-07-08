@@ -2,7 +2,7 @@ name: Generate and Upload HTML to Azure
 
 on:
   schedule:
-    - cron: '0 3 * * *'  # Runs every day at 03:00 UTC
+    - cron: '0 8 * * *'  # Runs every day at 08:00 UTC
   workflow_dispatch:      # Allows manual trigger
 
 jobs:
