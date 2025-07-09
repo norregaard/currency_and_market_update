@@ -7,6 +7,7 @@ This repository automates the generation and deployment of two types of reports:
 ## 🗓️ Monthly Currency and Market Report
 
 Automatically fetches currency exchange rates, metal prices, and stock prices — then emails (once per month) a clean, mobile-friendly market summary report.
+
 ---
 
 ## ✨ Features
@@ -54,6 +55,9 @@ In addition to the monthly overview, the project now includes a **daily report**
 ---
 
 ## 🚀 Getting Started
+
+- Create a storage account in Azure and enable static website under Data Management section. Custom domain can be set under Networking section (separate sub tab)
+- Create the required repository secrets in Github, e.g. METAL_API_KEY, TO_EMAIL, FROM_EMAIL, EMAIL_PASSWORD (look through the mentioned files to see all used)
 
 ### Dependencies
 
