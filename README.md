@@ -40,8 +40,8 @@ Automatically fetches currency exchange rates, metal prices, and stock prices ‚Ä
 
 In addition to the monthly overview, the project now includes a **daily report** that uploads exchange rates and gold prices daily to a Azure blob storage static website.
 
-- **Script:** [`scripts/currency_report_v2.py`](scripts/currency_report_v2.py)
-- **Automation:** Deployed daily using [GitHub Actions](.github/workflows/deploy-to-blob.yml)
+- **Script:** [`scripts/generate_report.py`](scripts/generate_report.py)
+- **Automation:** Deployed daily using [GitHub Actions workflow](.github/workflows/deploy-to-blob.yml)
 - **Output:** Hosted via Azure Blob Storage Static Website
 
 ### üîÅ Workflow Highlights
